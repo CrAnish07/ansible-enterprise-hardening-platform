@@ -19,7 +19,7 @@
     policy: allow
 
 - name: Allow SSH
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "{{ firewall_ssh_port }}"
     proto: tcp

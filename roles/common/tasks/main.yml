@@ -1,6 +1,6 @@
 ---
 - name: Set system timezone
-  timezone:
+  community.general.timezone:
     name: Asia/Kolkata
 
 - name: Update apt cache

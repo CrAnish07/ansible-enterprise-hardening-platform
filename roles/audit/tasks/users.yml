@@ -2,7 +2,7 @@
 - name: Check required users exist
   command: id {{ item }}
   loop: "{{ audit_expected.users }}"
-  register: user_check
+  register: audit_user_check
   ignore_errors: true
   changed_when: false
 

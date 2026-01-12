@@ -4,29 +4,29 @@
 ---
 - name: Create devops user
   user:
-    name: "{{ devops_user }}"
-    shell: "{{ devops_shell }}"
+    name: "{{ users_devops_user }}"
+    shell: "{{ users_devops_shell }}"
     groups: sudo
     append: yes
     create_home: yes
 
 - name: Create .ssh directory
   file:
-    path: "/home/{{ devops_user }}/.ssh"
+    path: "/home/{{ users_devops_user }}/.ssh"
     state: directory
-    owner: "{{ devops_user }}"
-    group: "{{ devops_user }}"
+    owner: "{{ users_devops_user }}"
+    group: "{{ users_devops_user }}"
     mode: "0700"
 
 - name: Add SSH public key for devops user
-  authorized_key:
-    user: "{{ devops_user }}"
-    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_ed25519.pub') }}"
+  ansible.posix.authorized_key:
+    user: "{{ users_devops_user }}"
+    key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/id_ed25519.pub') }}"
 
 - name: Allow devops user passwordless sudo
   copy:
-    dest: "/etc/sudoers.d/{{ devops_user }}"
-    content: "{{ devops_user }} ALL=(ALL) NOPASSWD:ALL"
+    dest: "/etc/sudoers.d/{{ users_devops_user }}"
+    content: "{{ users_devops_user }} ALL=(ALL) NOPASSWD:ALL"
     owner: root
     group: root
     mode: "0440"

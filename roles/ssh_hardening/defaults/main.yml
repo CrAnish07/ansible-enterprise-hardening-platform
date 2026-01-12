@@ -2,9 +2,9 @@
 # defaults file for roles/ssh_hardening
 
 ---
-ssh_port: 22
-permit_root_login: "no"
-password_authentication: "no"
-max_auth_tries: 3
-login_grace_time: 30
+ssh_hardening_port: 22
+ssh_hardening_permit_root_login: "no"
+ssh_hardening_password_authentication: "no"
+ssh_hardening_max_auth_tries: 3
+ssh_hardening_login_grace_time: 30
 

@@ -1,7 +1,7 @@
 ---
 - name: Check UFW status
   command: ufw status
-  register: ufw_status
+  register: audit_ufw_status
   changed_when: false
 
 - name: Fail if firewall is disabled

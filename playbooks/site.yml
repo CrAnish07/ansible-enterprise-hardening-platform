@@ -1,8 +1,10 @@
----
-- import_playbook: bootstrap.yml
-- import_playbook: hardening.yml
+- name: Bootstrap phase
+  import_playbook: bootstrap.yml
 
-- name: Run security audit
+- name: Hardening phase
+  import_playbook: hardening.yml
+
+- name: Audit phase
   hosts: servers
   become: true
   roles:

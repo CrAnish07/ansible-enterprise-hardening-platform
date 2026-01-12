@@ -1,7 +1,10 @@
 ---
 - name: Check SSH root login setting
-  shell: "sshd -T | grep permitrootlogin"
-  register: ssh_root_login
+  shell: |
+    set -o pipefail
+    sshd -T | grep permitrootlogin
+
+  register: audit_ssh_root_login
   changed_when: false
 
 - name: Fail if root login is enabled
