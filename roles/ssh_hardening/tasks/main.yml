@@ -1,0 +1,40 @@
+#SPDX-License-Identifier: MIT-0
+# tasks file for roles/ssh_hardening
+
+---
+- name: Ensure OpenSSH server is installed
+  apt:
+    name: openssh-server
+    state: present
+
+- name: Disable root SSH login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PermitRootLogin'
+    line: "PermitRootLogin {{ permit_root_login }}"
+    backup: yes
+
+- name: Disable password authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication'
+    line: "PasswordAuthentication {{ password_authentication }}"
+    backup: yes
+
+- name: Limit authentication attempts
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?MaxAuthTries'
+    line: "MaxAuthTries {{ max_auth_tries }}"
+
+- name: Set login grace time
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?LoginGraceTime'
+    line: "LoginGraceTime {{ login_grace_time }}"
+
+- name: Restart SSH service
+  service:
+    name: ssh
+    state: restarted
+

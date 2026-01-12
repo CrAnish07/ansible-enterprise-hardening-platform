@@ -1,0 +1,10 @@
+---
+- import_playbook: bootstrap.yml
+- import_playbook: hardening.yml
+
+- name: Run security audit
+  hosts: servers
+  become: true
+  roles:
+    - audit
+

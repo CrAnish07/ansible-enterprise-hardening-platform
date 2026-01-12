@@ -1,0 +1,9 @@
+---
+- name: Apply user, SSH and firewall hardening
+  hosts: servers
+  become: true
+  roles:
+    - users
+    - ssh_hardening
+    - firewall
+

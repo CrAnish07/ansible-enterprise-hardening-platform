@@ -1,0 +1,46 @@
+#SPDX-License-Identifier: MIT-0
+# tasks file for roles/firewall
+
+---
+- name: Install UFW
+  apt:
+    name: ufw
+    state: present
+    update_cache: true
+
+- name: Set default incoming policy to deny
+  ufw:
+    direction: incoming
+    policy: deny
+
+- name: Set default outgoing policy to allow
+  ufw:
+    direction: outgoing
+    policy: allow
+
+- name: Allow SSH
+  ufw:
+    rule: allow
+    port: "{{ firewall_ssh_port }}"
+    proto: tcp
+
+- name: Allow additional TCP ports
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop: "{{ firewall_allowed_tcp_ports }}"
+  when: firewall_allowed_tcp_ports | length > 0
+
+- name: Allow additional UDP ports
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: udp
+  loop: "{{ firewall_allowed_udp_ports }}"
+  when: firewall_allowed_udp_ports | length > 0
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+

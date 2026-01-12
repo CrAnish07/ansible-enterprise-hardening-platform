@@ -1,0 +1,21 @@
+---
+- name: Set system timezone
+  timezone:
+    name: Asia/Kolkata
+
+- name: Update apt cache
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Install base packages
+  apt:
+    name:
+      - curl
+      - vim
+      - git
+      - htop
+      - unzip
+      - ca-certificates
+    state: present
+

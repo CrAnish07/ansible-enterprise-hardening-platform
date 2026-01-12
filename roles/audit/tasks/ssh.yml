@@ -1,0 +1,11 @@
+---
+- name: Check SSH root login setting
+  shell: "sshd -T | grep permitrootlogin"
+  register: ssh_root_login
+  changed_when: false
+
+- name: Fail if root login is enabled
+  fail:
+    msg: "SECURITY DRIFT: Root login is enabled!"
+  when: "'no' not in ssh_root_login.stdout"
+

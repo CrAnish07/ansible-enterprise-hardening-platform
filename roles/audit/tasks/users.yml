@@ -1,0 +1,13 @@
+---
+- name: Check required users exist
+  command: id {{ item }}
+  loop: "{{ audit_expected.users }}"
+  register: user_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Fail if required user is missing
+  fail:
+    msg: "SECURITY DRIFT: Required user missing!"
+  when: user_check is failed
+

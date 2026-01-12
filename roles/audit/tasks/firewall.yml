@@ -1,0 +1,11 @@
+---
+- name: Check UFW status
+  command: ufw status
+  register: ufw_status
+  changed_when: false
+
+- name: Fail if firewall is disabled
+  fail:
+    msg: "SECURITY DRIFT: Firewall is disabled!"
+  when: "'Status: active' not in ufw_status.stdout"
+
