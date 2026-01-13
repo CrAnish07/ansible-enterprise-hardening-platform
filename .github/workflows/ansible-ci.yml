@@ -1,0 +1,33 @@
+name: Ansible CI
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  ansible-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install ansible ansible-lint
+
+      - name: Run ansible-lint
+        run: ansible-lint
+
+      - name: Run Ansible dry-run
+        run: |
+          ansible-playbook playbooks/site.yml --check \
+            -i inventories/dev/hosts.ini \
+            --connection=local
+
